@@ -36,4 +36,14 @@ class DateIdeasController < ApplicationController
     )
     render :show
   end
+
+  def destroy
+    @date_idea = DateIdea.find_by(id: params[:id])
+    @date_idea.destroy
+    if @date_idea.destroyed?
+      render json: { message: "Date idea deleted" }, status: :ok
+    else
+      render json: { error: "Date idea not found" }, status: :not_found
+    end
+  end
 end
