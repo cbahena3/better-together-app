@@ -25,4 +25,15 @@ class DateIdeasController < ApplicationController
       render json: { error: "Date idea not found" }, status: :not_found
     end
   end
+
+  def update
+    @date_idea = DateIdea.find_by(id: params[:id])
+    @date_idea.update(
+     name: params[:name]|| @date_idea.name,
+     image: params[:image] || @date_idea.image,
+     cost: params[:cost] || @date_idea.cost,
+     description: params[:description] || @date_idea.description
+    )
+    render :show
+  end
 end

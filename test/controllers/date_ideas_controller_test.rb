@@ -26,4 +26,13 @@ class DateIdeasControllerTest < ActionDispatch::IntegrationTest
     # Using sort to account for order differences:
     assert_equal expected_keys.sort, data.keys.sort
   end
+
+  test "update" do
+    date_idea = DateIdea.first
+    patch "/date_ideas/#{date_idea.id}.json", params: { name: "Updated name" }
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    assert_equal "Updated name", data["name"]
+  end
 end
