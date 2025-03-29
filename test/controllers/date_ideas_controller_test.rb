@@ -15,4 +15,15 @@ class DateIdeasControllerTest < ActionDispatch::IntegrationTest
       assert_response :created  # or assert_response 201
     end
   end
+
+  test "show" do
+    date_idea = DateIdea.first
+    get "/date_ideas/#{date_idea.id}.json"
+    assert_response 200
+
+    data = JSON.parse(response.body)
+    expected_keys = [ "id", "name", "image", "cost", "description", "created_at", "updated_at" ]
+    # Using sort to account for order differences:
+    assert_equal expected_keys.sort, data.keys.sort
+  end
 end
